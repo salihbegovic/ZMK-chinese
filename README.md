@@ -5,6 +5,7 @@ Update on October 24, 2024: Modified power supply mode to reduce power consumpti
 If you need the 3D printed model file or if there are any abnormalities with the keyboard, please contact 380465425@qq.com
 # zmk-config-sofle
 
+#added comment for push
 
 <img src="keymap-drawer/sofle.svg" >
 
