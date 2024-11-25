@@ -15,6 +15,11 @@
 #define ZMK_MOUSE_DEFAULT_MOVE_VAL 1200  //  600
 #define ZMK_MOUSE_DEFAULT_SCRL_VAL 20    // 10
 
+#define BASE 0
+#define LOWER 1
+#define RAISE 2
+#define ADJUST 3
+
 / {
     behaviors {
         mmv {
@@ -38,6 +43,14 @@
         tap-ms = <30>;
     };
 
+    conditional_layers {
+        compatible = "zmk,conditional-layers";
+        adjust_layer {
+            if-layers = <LOWER RAISE>;
+            then-layer = <ADJUST>;
+        };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
@@ -56,11 +69,11 @@
 
         layer_1 {
             bindings = <
-&kp GRAVE   &kp F1           &kp F2          &kp F3           &kp F4           &kp F5             &mmv MOVE_UP     &kp F6           &kp F7           &kp F8      &kp F9     &kp F10           &trans
-&trans      &kp GRAVE        &mkp LCLK       &mkp MCLK        &mkp RCLK        &mkp MB4           &mmv MOVE_DOWN   &kp PG_UP        &kp END          &kp UP      &kp HOME   &kp MINUS         &kp EQUAL
-&trans      &kp TILDE        &trans          &trans           &trans           &mkp MB5           &mmv MOVE_LEFT   &kp PG_DN        &kp LEFT         &kp DOWN    &kp RIGHT  &kp LEFT_BRACKET  &kp RIGHT_BRACKET
-&trans      &rgb_ug RGB_OFF  &rgb_ug RGB_ON  &rgb_ug RGB_EFF  &rgb_ug RGB_EFR  &rgb_ug RGB_SPI    &mmv MOVE_RIGHT  &rgb_ug RGB_BRI  &rgb_ug RGB_BRD  &kp INSERT  &kp F11    &kp F12           &trans
-&kp C_MUTE  &trans           &trans          &trans           &trans           &trans             &mkp LCLK        &trans           &trans           &trans      &trans     &trans
+&trans    &kp F1    &kp F2    &kp F3      &kp F4    &kp F5     &mmv MOVE_UP     &kp F6    &kp F7   &kp F8          &kp F9    &kp F10   &kp F11
+&kp GRAVE &kp N1    &kp N2    &kp N3      &kp N4    &kp N5     &mmv MOVE_DOWN   &kp N6    &kp N7   &kp N8          &kp N9    &kp N0    &kp F12
+&trans    &kp EXCL  &kp AT    &kp HASH    &kp DLLR  &kp PRCNT  &mmv MOVE_LEFT   &kp CARET &kp AMPS &kp KP_MULTIPLY &kp LPAR  &kp RPAR  &kp PIPE
+&trans    &kp EQUAL &kp MINUS &kp KP_PLUS &kp LBRC  &kp RBRC   &mmv MOVE_RIGHT  &kp LBKT  &kp RBKT &kp SEMI        &kp COLON &kp BSLH  &trans
+&kp C_MUTE  &trans           &trans          &trans            &trans           &trans             &mkp LCLK        &trans           &trans           &trans      &trans     &trans
             >;
 
             display-name = "layer1";
@@ -69,10 +82,22 @@
 
         layer_2 {
             bindings = <
-&kp TILDE  &bt BT_SEL 0  &bt BT_SEL 1    &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4    &mmv MOVE_UP     &kp F6  &kp F7  &kp F8      &kp F9     &kp F10      &trans
-&trans     &bt BT_CLR    &bt BT_CLR_ALL  &trans        &trans        &trans          &mmv MOVE_DOWN   &trans  &trans  &kp F11     &kp F12    &kp UNDER    &kp PLUS
-&trans     &out OUT_USB  &out OUT_BLE    &trans        &trans        &trans          &mmv MOVE_LEFT   &trans  &trans  &trans      &trans     &kp LBRC     &kp RBRC
-&trans     &sys_reset    &trans          &bootloader   &trans        &trans          &mmv MOVE_RIGHT  &trans  &trans  &sys_reset  &soft_off  &bootloader  &trans
+&trans 	   &trans	&trans	     &trans	  &trans       &trans     &mmv MOVE_UP     &trans    &trans    &trans   &trans    &trans  &trans
+&trans     &kp INS      &kp PSCRN    &kp K_CMENU  &trans       &trans     &mmv MOVE_DOWN   &kp PG_UP &trans    &kp UP   &trans    &kp N0  &trans
+&trans     &kp LALT     &kp LCTRL    &kp LSHFT    &trans       &kp CLCK   &mmv MOVE_LEFT   &kp PG_DN &kp LEFT  &kp DOWN &kp RIGHT &kp DEL &kp BSP
+&trans     &kp K_UNDO   &kp K_CUT    &kp K_COPY   &kp K_PASTE  &trans     &mmv MOVE_RIGHT  &trans    &trans    &trans   &trans    &trans  &trans
+&trans     &trans        &trans          &trans        &trans        &trans          &mkp LCLK        &trans  &trans  &trans      &trans     &trans
+            >;
+
+            sensor-bindings = <&scroll_encoder>;
+        };
+
+        layer_3 {
+            bindings = <
+&bt BT_CLR                      &bt BT_SEL 0    &bt BT_SEL 1    &bt BT_SEL 2    &bt BT_SEL 3    &bt BT_SEL 4    &mmv MOVE_UP     &none &none &none &none &none &none
+&ext_power EXT_POWER_TOGGLE_CMD &rgb_ug RGB_HUD &rgb_ug RGB_HUI &rgb_ug RGB_SAD &rgb_ug RGB_SAI &rgb_ug RGB_EFF &mmv MOVE_DOWN   &none &kp KP_N7 &kp KP_N8 &kp KP_N9 &none &none
+&none                           &rgb_ug RGB_BRD &rgb_ug RGB_BRI &none           &none           &none           &mmv MOVE_LEFT   &none &kp KP_N4 &kp KP_N5 &kp KP_N6 &none &none
+&none                           &none           &none           &none           &none           &none           &mmv MOVE_RIGHT  &none &kp KP_N1 &kp KP_N2 &kp KP_N3 &none &none
 &trans     &trans        &trans          &trans        &trans        &trans          &mkp LCLK        &trans  &trans  &trans      &trans     &trans
             >;
 
