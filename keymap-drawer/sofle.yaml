@@ -59,7 +59,7 @@ layers:
   - $$mdi:apple-keyboard-control$$
   - layer1
   - {t: '$$mdi:keyboard-return$$', type: enter}
-  - {t: '$$mdi:keyboard-return$$', type: enter}
+  - '&mkp MB3'
   - $$mdi:keyboard-space$$
   - '2'
   - $$mdi:apple-keyboard-control$$
